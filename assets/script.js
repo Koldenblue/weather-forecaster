@@ -1,6 +1,5 @@
 "use strict";
 const APIKEY = "546e9995ce8b4a04d00449aab5bc5222";
-let cityNameForm = document.getElementById("city-name");
 let prevSearches = [];
 
 console.log("page loaded")
@@ -9,17 +8,28 @@ console.log("page loaded")
 function main() {
     getLocalStorage();
     addListeners();
+    populatePrevSearches();
 }
 
 $(document).ready(main);
 
 
 let getLocalStorage = () => {
-    cityNameForm.value = localStorage.getItem("cityName");
+    document.getElementById("city-name").value = localStorage.getItem("cityName");
     prevSearches = JSON.parse(localStorage.getItem("prevSearches"));
     prevSearches === null ? prevSearches = [] : prevSearches = prevSearches;
 }
 
+
+let populatePrevSearches = () => {
+    let prevSearchBar = $(".prev-searches");
+    for (let i = 0, j = prevSearches.length; i < j; i++) {
+        let prevSearchBtn = $("<btn>");
+        prevSearchBtn.attr("class", "list-group-item list-group-item-action prev-search-btn").text(prevSearches[i].city.name);
+        // prevSearchBtn.on("hover").addClass("active");
+        prevSearchBar.prepend(prevSearchBtn);
+    }
+}
 
 let makeCall = (queryURL) => {
     return $.ajax({
