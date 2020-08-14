@@ -60,11 +60,45 @@ const displayWeather = (response) => {
     console.log("getting icons...")
     console.log(response)
     // first get icons
-    let weatherIconCode = response.list[0].weather[0].icon;
-    let iconURL = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
-    let newIcon = $(`<img src=${iconURL}>`);
-    myResponse = newIcon;
-    $(".weather-list").append(newIcon);
+
+    // weatherTime corresponds to the index of the weather array, with increasing indices corresponding to future dates
+    let weatherTime = 0;
+    // clear out old weather cards, then make a new set of five cards.
+    $(".weather-list").empty();
+    let future = 1;
+    while (weatherTime < 40) {
+        // first get the weather icon picture
+        const weatherIconCode = response.list[weatherTime].weather[0].icon;
+        let iconURL = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
+        let newIcon = $(`<img src=${iconURL} class='card-img-top' alt='forecast for ${future} days out'>`);
+        future++;
+
+        // next get temperature in Fahrenheit and other relevant statistics
+        const weatherTemp = response.list[weatherTime].main.temp;
+        const humidity = response.list[weatherTime].main.humidity;
+        const weatherDescription = response.list[weatherTime].weather[0].description;
+
+        // Put all statistics into a card and append to document.
+        let cardBody = $("<div class='card-body'>")
+        let cardText1 = $("<p>").attr("class", "card-text");
+        let cardText2 = $("<p>").attr("class", "card-text");
+        let cardText3 = $("<p>").attr("class", "card-text");
+        cardText1.text(weatherTemp + " F")
+        cardText2.text(humidity + "%");
+        let firstLetter = weatherDescription[0];
+        firstLetter = firstLetter.toUpperCase;
+        console.log(firstLetter); 
+        cardText3.text(weatherDescription)
+
+        cardBody.append(cardText1).append(cardText2).append(cardText3);
+
+        let weatherCard = $("<div class='card col-md-2' style='width:9rem;'>").append(newIcon).append(cardBody)
+        $(".weather-list").append(weatherCard)
+
+        // increment weatherTime by 8 to get the next day's weather. Last day index will be 39, rather than 40.
+        weatherTime += 8;
+        weatherTime === 40 ? weatherTime = 39 : weatherTime = weatherTime;
+    }
 }
 
 /** adds a listener to the submit button that makes an api call */
@@ -81,7 +115,7 @@ const weatherListener = () => {
         }
         localStorage.setItem("cityName", cityName);
 
-        // Search forecast using input city.
+        // Search forecast using input city. Imperial units for Fahrenheit
         let queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="
             + cityName + "&units=imperial&appid=" + API_KEY;
 
