@@ -12,6 +12,9 @@
   <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" 
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" 
+    integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="assets/style.css">
   <script defer src="assets/script.js"></script>
 
@@ -24,54 +27,47 @@
 <div class='container-fluid'>
   <div class='row flex-xl-nowrap'>
 
-
     <!-- note that the col sizes are different depending on screen size => md-3 vs xl-2 -->
-    <!-- Sidebar, part of container-fluid: -->
-    <div class='col-md-4 col-xl-3 bd-sidebar'>
-      <div class="list-group prev-searches">
+    <!-- Sidebar, consists of 2 rows -->
+    <div class='col-md-3 col-xl-3 bd-sidebar'>
+      <div class=row>
+        <form id="location-form">
+          <div class="form-group">
+            <label for="city-name">City Name</label>
+            <input type="text" class="form-control" id="city-name" aria-describedby="city-name">
+            <small id="enter-city" class="form-text text-muted">Enter the name of the city here.</small>
+          </div>
+          <button type="submit" class="btn btn-primary" id="get-weather">Submit</button>
+          <div class="spinner-border loading-weather" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </form>
+      </div>
+
+      <div class=row>
+        <div class="list-group prev-searches col-md-12">
+        </div>
       </div>
     </div>
 
     <!-- Container that takes up right side of page -->
-    <div class='container col-md-8 col-xl-9'>
+    <div class='container col-md-9 col-xl-9'>
+      <div class=row>
+        <div class="jumbotron col-md-12">
+          <h1 class="display-4">Hello, world!</h1>
+          <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+          <hr class="my-4">
+          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+      </div>
 
       <!-- align-content or align-item-center => check bootstrap -->
       <div class='row'>
-
-        <div class='col-md-8'>
-          <form id="location-form">
-            <div class="form-group">
-              <label for="city-name">City Name</label>
-              <input type="text" class="form-control" id="city-name" aria-describedby="city-name">
-              <small id="enter-city" class="form-text text-muted">Enter the name of the city here.</small>
-            </div>
-            <button type="submit" class="btn btn-primary" id="get-weather">Submit</button>
-          </form>
+        <div class='col-md-12 weather-list'>
         </div>
-
-        <div class='col-md-4 weather-list'>
-
-        </div>
-
       </div>
-
-      <div class="spinner-border loading-weather" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    
     </div>
-
-    <!-- <div class='col-md-3 col-xl-2'>
-      <div class="list-group">
-        <button type="button" class="list-group-item list-group-item-action active">
-          Cras justo odio
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-        <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-        <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-        <button type="button" class="list-group-item list-group-item-action">Vestibulum at eros</button>
-      </div>
-    </div> -->
 
   </div>
 </div>
