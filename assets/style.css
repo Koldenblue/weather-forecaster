@@ -2,3 +2,6 @@ body {
     background-color: darkgreen;
 }
 
+.loading-weather {
+    display: none;
+}
