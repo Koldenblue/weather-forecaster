@@ -2,13 +2,14 @@
 const API_KEY = "546e9995ce8b4a04d00449aab5bc5222";
 let prevCities = [];    // a list of the names of previously searched cities
 let myResponse;
-let currentHour = moment().hour();
-let currentTime = moment().format();
-let currentDay = moment().day();
 
-console.log(currentHour);
+let currentTime = moment().format();
+// let tomorrow = moment().add(1, 'd').format()
+// let tomorrow = moment(moment().format() + "+24:00")
+// console.log(tomorrow)
+
 console.log(currentTime);
-console.log(currentDay);
+
 console.log("page loaded");
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code}&appid={your api key}
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code},{country code}&appid={your api key}
@@ -83,33 +84,41 @@ const displayWeather = (response) => {
         const weatherIconCode = response.list[weatherTime].weather[0].icon;
         let iconURL = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
         let newIcon = $(`<img src=${iconURL} class='card-img-top' alt='forecast for ${future} days out'>`);
-        future++;
 
         // next get temperature in Fahrenheit and other relevant statistics
         const weatherTemp = response.list[weatherTime].main.temp;
         const humidity = response.list[weatherTime].main.humidity;
         const weatherDescription = response.list[weatherTime].weather[0].description;
 
-        // Put all statistics into a card and append to document.
+        // create the main weather card body
         let cardBody = $("<div class='card-body'>")
+
+        // add on the day:
+        let futureDate = moment().add(future, 'd').format("dddd, MMMM Do")
+        // Note: the text in the div must be set separately from creating the div element.
+        let cardDateText = $('<div>').html("<strong>" + futureDate + "</strong>").attr("class", "card-header");
+        // let cardDateText = $('<div>').append("<strong>").text(`${futureDate}`).attr("class", "card-header");
+
+        // Create new paragraphs to put onto each weather card
         let cardText1 = $("<p>").attr("class", "card-text");
         let cardText2 = $("<p>").attr("class", "card-text");
         let cardText3 = $("<p>").attr("class", "card-text");
-        cardText1.text(weatherTemp + " F")
-        cardText2.text(humidity + "%");
-        let firstLetter = weatherDescription[0];
-        firstLetter = firstLetter.toUpperCase;
-        console.log(firstLetter); 
-        cardText3.text(weatherDescription)
+        cardText1.text("Temp: " + weatherTemp + " °F")
+        cardText2.text("Humidity: " + humidity + "%");
+        // let firstLetter = weatherDescription[0];
+        // firstLetter = firstLetter.toUpperCase;
+        // console.log(firstLetter); 
+        cardText3.text("Forecast: " + weatherDescription)
 
         cardBody.append(cardText1).append(cardText2).append(cardText3);
 
-        let weatherCard = $("<div class='card col-md-2' style='width:9rem;'>").append(newIcon).append(cardBody)
+        let weatherCard = $("<div class='card col-md-2' style='width:18rem;'>").append(cardDateText).append(newIcon).append(cardBody);
         $(".weather-list").append(weatherCard)
 
         // increment weatherTime by 8 to get the next day's weather. Last day index will be 39, rather than 40.
         weatherTime += 8;
-        weatherTime === 40 ? weatherTime = 39 : weatherTime = weatherTime;
+        // weatherTime === 40 ? weatherTime = 39 : weatherTime = weatherTime;
+        future++;
     }
 }
 

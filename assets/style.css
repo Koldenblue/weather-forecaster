@@ -1,5 +1,6 @@
 body {
     background-color: darkgreen;
+    margin: 0;
 }
 
 .loading-weather {
@@ -22,9 +23,13 @@ header {
 }
 
 .time-card {
-    margin-right: 1em;
+    /* margin-right: 1em; */
 }
 
 h1 {
     font-family: 'Merriweather', serif;
+}
+
+.card {
+    margin: 0.5em;
 }
