@@ -3,14 +3,14 @@ body {
 }
 
 .loading-weather {
-    display: none;
+    visibility: hidden;
 }
 
 header {
     background-color: crimson;
 }
 
-.container-fluid, .container {
+.container-fluid {
     margin: 1em;
 }
 
@@ -19,4 +19,12 @@ header {
 }
 .prev-searches {
     margin-top: 2em;
+}
+
+.time-card {
+    margin-right: 1em;
+}
+
+h1 {
+    font-family: 'Merriweather', serif;
 }

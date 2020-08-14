@@ -2,13 +2,20 @@
 const API_KEY = "546e9995ce8b4a04d00449aab5bc5222";
 let prevCities = [];    // a list of the names of previously searched cities
 let myResponse;
+let currentHour = moment().hour();
+let currentTime = moment().format();
+let currentDay = moment().day();
 
+console.log(currentHour);
+console.log(currentTime);
+console.log(currentDay);
 console.log("page loaded");
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code}&appid={your api key}
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code},{country code}&appid={your api key}
 
 /** Main controller function. Gets items from storage, adds event listeners, and fills out the search bar. */
 function main() {
+    $(".currentDay").text(moment().format("dddd, MMMM Do"));
     getLocalStorage();
     weatherListener();
     populatePrevSearches();
@@ -52,6 +59,7 @@ const makeCall = (queryURL) => {
 const displayWeather = (response) => {
     console.log("getting icons...")
     console.log(response)
+    // first get icons
     let weatherIconCode = response.list[0].weather[0].icon;
     let iconURL = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
     let newIcon = $(`<img src=${iconURL}>`);
@@ -78,9 +86,9 @@ const weatherListener = () => {
             + cityName + "&units=imperial&appid=" + API_KEY;
 
         // display loading spinner while making api call
-        $(".loading-weather").attr("style", "display:flex");
+        $(".loading-weather").attr("style", "visibility:visible");
         makeCall(queryURL).then(function (response) {
-            $(".loading-weather").attr("style", "display:none");
+            $(".loading-weather").attr("style", "visibility:hidden");
 
             cityName = response.city.name;
             let cityIndex = prevCities.indexOf(cityName);
