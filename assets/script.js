@@ -1,6 +1,7 @@
 "use strict";
 const API_KEY = "546e9995ce8b4a04d00449aab5bc5222";
 let prevCities = [];    // a list of the names of previously searched cities
+let myResponse;
 
 console.log("page loaded");
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code}&appid={your api key}
@@ -9,7 +10,7 @@ console.log("page loaded");
 /** Main controller function. Gets items from storage, adds event listeners, and fills out the search bar. */
 function main() {
     getLocalStorage();
-    addListeners();
+    weatherListener();
     populatePrevSearches();
 }
 
@@ -48,8 +49,18 @@ const makeCall = (queryURL) => {
     });
 }
 
+const displayWeather = (response) => {
+    console.log("getting icons...")
+    console.log(response)
+    let weatherIconCode = response.list[0].weather[0].icon;
+    let iconURL = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
+    let newIcon = $(`<img src=${iconURL}>`);
+    myResponse = newIcon;
+    $(".weather-list").append(newIcon);
+}
 
-const addListeners = () => {
+/** adds a listener to the submit button that makes an api call */
+const weatherListener = () => {
     document.getElementById("location-form").addEventListener("submit", function() {
         // The form, not the button, reloads the page. So for the submit event, the event must be on the form.
         event.preventDefault();
@@ -66,7 +77,7 @@ const addListeners = () => {
         let queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="
             + cityName + "&units=imperial&appid=" + API_KEY;
 
-        // display loading spinner while waiting for api call
+        // display loading spinner while making api call
         $(".loading-weather").attr("style", "display:flex");
         makeCall(queryURL).then(function (response) {
             $(".loading-weather").attr("style", "display:none");
@@ -78,18 +89,21 @@ const addListeners = () => {
             if (cityIndex === -1) {
                 prevCities.unshift(cityName);
             }
-            // else set the city to the first element in the array by splicing it out.
+            // else set the city to the first element in the array.
             else {
                 prevCities.splice(cityIndex, 1);
                 prevCities.unshift(cityName);
             }
 
+            // store city name and populate the previously searched list.
             localStorage.setItem("prevCities", JSON.stringify(prevCities));
             console.log(response);
             populatePrevSearches();
+            displayWeather(response);
         }).catch(function(error) {
             console.log("ERROR ERROR ERROR " + error.statusText);
             console.log(error);
         });
     });
 }
+

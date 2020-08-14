@@ -23,34 +23,42 @@
 <!-- container-fluid to encompass entire page -->
 <div class='container-fluid'>
   <div class='row flex-xl-nowrap'>
+
+
     <!-- note that the col sizes are different depending on screen size => md-3 vs xl-2 -->
+    <!-- Sidebar, part of container-fluid: -->
     <div class='col-md-4 col-xl-3 bd-sidebar'>
       <div class="list-group prev-searches">
       </div>
     </div>
 
+    <!-- Container that takes up right side of page -->
     <div class='container col-md-8 col-xl-9'>
-    <!-- <div class='col-md-8 col-xl-9'> -->
+
       <!-- align-content or align-item-center => check bootstrap -->
-        <div class='row'>
-          <div class='col-md-8'>
-            <form id="location-form">
-              <div class="form-group">
-                <label for="city-name">City Name</label>
-                <input type="text" class="form-control" id="city-name" aria-describedby="city-name">
-                <small id="enter-city" class="form-text text-muted">Enter the name of the city here.</small>
-              </div>
-              <button type="submit" class="btn btn-primary" id="get-weather">Submit</button>
-            </form>
-          </div>
-          <div class='col-md-4'>
-            
-          </div>
+      <div class='row'>
+
+        <div class='col-md-8'>
+          <form id="location-form">
+            <div class="form-group">
+              <label for="city-name">City Name</label>
+              <input type="text" class="form-control" id="city-name" aria-describedby="city-name">
+              <small id="enter-city" class="form-text text-muted">Enter the name of the city here.</small>
+            </div>
+            <button type="submit" class="btn btn-primary" id="get-weather">Submit</button>
+          </form>
         </div>
-      <!-- </div> -->
+
+        <div class='col-md-4 weather-list'>
+
+        </div>
+
+      </div>
+
       <div class="spinner-border loading-weather" role="status">
         <span class="sr-only">Loading...</span>
       </div>
+    
     </div>
 
     <!-- <div class='col-md-3 col-xl-2'>
