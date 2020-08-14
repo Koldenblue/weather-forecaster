@@ -23,6 +23,9 @@
 
 <body>
 
+  <header class='py-3'>
+    <h1 class=text-center>Weather Dashboard</h1>
+  </header>
 <!-- container-fluid to encompass entire page -->
 <div class='container-fluid'>
   <div class='row flex-xl-nowrap'>
@@ -31,29 +34,30 @@
     <!-- Sidebar, consists of 2 rows -->
     <div class='col-md-3 col-xl-3 bd-sidebar'>
       <div class=row>
-        <form id="location-form">
-          <div class="form-group">
-            <label for="city-name">City Name</label>
+
+        <form id="location-form" class='form-inline'>
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="city-name" class='sr-only'>City Name</label>
             <input type="text" class="form-control" id="city-name" aria-describedby="city-name">
-            <small id="enter-city" class="form-text text-muted">Enter the name of the city here.</small>
           </div>
-          <button type="submit" class="btn btn-primary" id="get-weather">Submit</button>
+          <button type="submit" class="btn btn-primary mb-2" id="get-weather">Submit</button>
+          <small id="enter-city" class="form-text text-muted mx-sm-3 mb-2">Enter the name of the city here.</small>
           <div class="spinner-border loading-weather" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </form>
       </div>
 
-      <div class=row>
+      <div class='row'>
         <div class="list-group prev-searches col-md-12">
         </div>
       </div>
     </div>
 
     <!-- Container that takes up right side of page -->
-    <div class='container col-md-9 col-xl-9'>
+    <div class='col-md-9 col-xl-9'>
       <div class=row>
-        <div class="jumbotron col-md-12">
+        <div class="jumbotron col-md-8">
           <h1 class="display-4">Hello, world!</h1>
           <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
           <hr class="my-4">

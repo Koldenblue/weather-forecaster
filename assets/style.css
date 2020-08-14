@@ -1,8 +1,22 @@
 body {
     background-color: darkgreen;
-    margin: 2em;
 }
 
 .loading-weather {
     display: none;
+}
+
+header {
+    background-color: crimson;
+}
+
+.container-fluid, .container {
+    margin: 1em;
+}
+
+.loading-weather {
+    margin-top: 0;
+}
+.prev-searches {
+    margin-top: 2em;
 }
