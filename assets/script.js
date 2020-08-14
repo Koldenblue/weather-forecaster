@@ -47,13 +47,14 @@ const populatePrevSearches = () => {
         prevSearchBtn.attr("class", "list-group-item list-group-item-action prev-search-btn").text(prevCities[i]);
         prevSearchBtn.attr("id", "btn-" + i);
         prevSearchBtn.on("click", function() {
-
+            let cityName = prevSearchBtn.text();
+            searchForecast(cityName);
         })
+        if (i === 0) {
+            prevSearchBtn.addClass("active");
+        }
         prevSearchBar.append(prevSearchBtn);
     }
-    $("#btn-1").on("click", function() {
-        console.log("clicked")
-    })
 }
 
 
@@ -129,6 +130,7 @@ const weatherListener = () => {
         searchForecast(cityName);
     });
 }
+
 
 /** Makes API call. After response is returned, add the searched city to the search list. 
  * Call displayWeather() to display results. */
