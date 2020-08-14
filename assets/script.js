@@ -23,6 +23,7 @@ function main() {
 
 $(document).ready(main);
 
+
 /** Fills out previous form input, and gets previous city names array from local storage */
 const getLocalStorage = () => {
     document.getElementById("city-name").value = localStorage.getItem("cityName");
@@ -32,6 +33,7 @@ const getLocalStorage = () => {
     prevCities = JSON.parse(localStorage.getItem("prevCities"));
     prevCities === null ? prevCities = [] : prevCities = prevCities;
 }
+
 
 /** Erases the search bar and creates a new bar, consisting of a button for each city */
 const populatePrevSearches = () => {
@@ -43,10 +45,17 @@ const populatePrevSearches = () => {
     for (let i = 0, j = prevCities.length; i < j; i++) {
         let prevSearchBtn = $("<btn>");
         prevSearchBtn.attr("class", "list-group-item list-group-item-action prev-search-btn").text(prevCities[i]);
-        // prevSearchBtn.on("hover").addClass("active");
+        prevSearchBtn.attr("id", "btn-" + i);
+        prevSearchBtn.on("click", function() {
+
+        })
         prevSearchBar.append(prevSearchBtn);
     }
+    $("#btn-1").on("click", function() {
+        console.log("clicked")
+    })
 }
+
 
 /** makes ajax call */
 const makeCall = (queryURL) => {
@@ -56,15 +65,17 @@ const makeCall = (queryURL) => {
     });
 }
 
+
 const displayWeather = (response) => {
     console.log("getting icons...")
-    console.log(response)
     // first get icons
 
     // weatherTime corresponds to the index of the weather array, with increasing indices corresponding to future dates
     let weatherTime = 0;
     // clear out old weather cards, then make a new set of five cards.
     $(".weather-list").empty();
+
+    // Append list of 5 cards for 5 future forecasts
     let future = 1;
     while (weatherTime < 40) {
         // first get the weather icon picture
@@ -101,7 +112,8 @@ const displayWeather = (response) => {
     }
 }
 
-/** adds a listener to the submit button that makes an api call */
+
+/** adds a listener to the submit button and to make an api call. Stores city name. */
 const weatherListener = () => {
     document.getElementById("location-form").addEventListener("submit", function() {
         // The form, not the button, reloads the page. So for the submit event, the event must be on the form.
@@ -114,38 +126,44 @@ const weatherListener = () => {
             return;
         }
         localStorage.setItem("cityName", cityName);
-
-        // Search forecast using input city. Imperial units for Fahrenheit
-        let queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="
-            + cityName + "&units=imperial&appid=" + API_KEY;
-
-        // display loading spinner while making api call
-        $(".loading-weather").attr("style", "visibility:visible");
-        makeCall(queryURL).then(function (response) {
-            $(".loading-weather").attr("style", "visibility:hidden");
-
-            cityName = response.city.name;
-            let cityIndex = prevCities.indexOf(cityName);
-
-            // if city has not been previously searched, add it to search list
-            if (cityIndex === -1) {
-                prevCities.unshift(cityName);
-            }
-            // else set the city to the first element in the array.
-            else {
-                prevCities.splice(cityIndex, 1);
-                prevCities.unshift(cityName);
-            }
-
-            // store city name and populate the previously searched list.
-            localStorage.setItem("prevCities", JSON.stringify(prevCities));
-            console.log(response);
-            populatePrevSearches();
-            displayWeather(response);
-        }).catch(function(error) {
-            console.log("ERROR ERROR ERROR " + error.statusText);
-            console.log(error);
-        });
+        searchForecast(cityName);
     });
 }
 
+/** Makes API call. After response is returned, add the searched city to the search list. 
+ * Call displayWeather() to display results. */
+function searchForecast(cityName) {
+    // Search forecast using input city. Imperial units for Fahrenheit
+    let queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="
+        + cityName + "&units=imperial&appid=" + API_KEY;
+
+    // display loading spinner while making api call
+    $(".loading-weather").attr("style", "visibility:visible");
+    makeCall(queryURL).then(function (response) {
+        $(".loading-weather").attr("style", "visibility:hidden");
+
+        cityName = response.city.name;
+        let cityIndex = prevCities.indexOf(cityName);
+
+        // if city has not been previously searched, add it to search list
+        if (cityIndex === -1) {
+            prevCities.unshift(cityName);
+        }
+        // else set the city to the first element in the array.
+        else {
+            prevCities.splice(cityIndex, 1);
+            prevCities.unshift(cityName);
+        }
+
+        // store city name and populate the previously searched list.
+        localStorage.setItem("prevCities", JSON.stringify(prevCities));
+        console.log(response);
+        populatePrevSearches();
+        displayWeather(response);
+    }).catch(function(error) {
+        console.log("ERROR ERROR ERROR " + error.statusText);
+        console.log(error);
+    });
+}
+
+// could calculate average weather instead
