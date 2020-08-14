@@ -28,15 +28,15 @@
   <header class='py-3'>
     <h1 class=text-center>Weather Dashboard</h1>
   </header>
+
 <!-- container-fluid to encompass entire page -->
-<div class='container-fluid'>
+<main class='container-fluid'>
   <div class='row flex-xl-nowrap'>
 
     <!-- note that the col sizes are different depending on screen size => md-3 vs xl-2 -->
-    <!-- Sidebar, consists of 2 rows -->
-    <div class='col-md-3 col-xl-3 bd-sidebar'>
+    <!-- Sidebar section, consists of 2 rows -->
+    <section class='col-md-3 col-xl-3 bd-sidebar'>
       <div class=row>
-
         <form id="location-form" class='form-inline'>
           <div class="form-group mx-sm-3 mb-2">
             <label for="city-name" class='sr-only'>City Name</label>
@@ -54,19 +54,21 @@
         <div class="list-group prev-searches col-md-12">
         </div>
       </div>
-    </div>
+    </section>
 
     <div class='col-md-9 col-xl-9'>
       <div class=row>
-        <div class="jumbotron col-md-8">
+        <!-- Jumbotron section -->
+        <section class="jumbotron col-md-8">
           <h1 class="display-4 currentDay"></h1>
           <p class="lead"></p>
           <hr class="my-4">
           <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
           <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </div>
+        </section>
 
-        <div class='col-md-4'>
+        <!-- Current time section -->
+        <section class='col-md-4'>
           <div class="card time-card">
             <div class="card-header">
               Current Time
@@ -78,31 +80,16 @@
               </blockquote>
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
-      <!-- align-content or align-item-center => check bootstrap -->
-      <div class='row weather-list'>
-
-          <div class="card col-md-2" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-
-          <div class="card col-md-2" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-
-      </div>
+      <!-- Forecast section -->
+      <section class='row weather-list'>
+      </section>
     </div>
 
   </div>
-</div>
+</main>
 
 
 
