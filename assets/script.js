@@ -33,6 +33,11 @@ const getLocalStorage = () => {
     // Instead, store only the search parameters.
     prevCities = JSON.parse(localStorage.getItem("prevCities"));
     prevCities === null ? prevCities = [] : prevCities = prevCities;
+
+    let lastForecast = JSON.parse(localStorage.getItem("lastForecast"));
+    if (lastForecast !== null) {
+        displayWeather(lastForecast);
+    }
 }
 
 
@@ -105,9 +110,6 @@ const displayWeather = (response) => {
         let cardText3 = $("<p>").attr("class", "card-text");
         cardText1.text("Temp: " + weatherTemp + " °F")
         cardText2.text("Humidity: " + humidity + "%");
-        // let firstLetter = weatherDescription[0];
-        // firstLetter = firstLetter.toUpperCase;
-        // console.log(firstLetter); 
         cardText3.text("Forecast: " + weatherDescription)
 
         cardBody.append(cardText1).append(cardText2).append(cardText3);
@@ -117,7 +119,6 @@ const displayWeather = (response) => {
 
         // increment weatherTime by 8 to get the next day's weather. Last day index will be 39, rather than 40.
         weatherTime += 8;
-        // weatherTime === 40 ? weatherTime = 39 : weatherTime = weatherTime;
         future++;
     }
 }
@@ -168,6 +169,7 @@ function searchForecast(cityName) {
 
         // store city name and populate the previously searched list.
         localStorage.setItem("prevCities", JSON.stringify(prevCities));
+        localStorage.setItem("lastForecast", JSON.stringify(response));
         console.log(response);
         populatePrevSearches();
         displayWeather(response);
