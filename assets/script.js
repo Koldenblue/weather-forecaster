@@ -29,11 +29,11 @@ $(document).ready(main);
 const getLocalStorage = () => {
     document.getElementById("city-name").value = localStorage.getItem("cityName");
 
-    // Storing the previous search objects isn't necessary, since we want new data each time.
-    // Instead, store only the search parameters.
+    // get prev cities list so that main() will populate search bar
     prevCities = JSON.parse(localStorage.getItem("prevCities"));
     prevCities === null ? prevCities = [] : prevCities = prevCities;
 
+    // get previous forecast for forecast cards and run display function
     let lastForecast = JSON.parse(localStorage.getItem("lastForecast"));
     if (lastForecast !== null) {
         displayForecastCards(lastForecast);
@@ -41,9 +41,17 @@ const getLocalStorage = () => {
     else {
         $(".currentCityTitle").text("Search for a city to start!");
     }
+
+    // get current weather for jumbotron section and run display function
     let currentWeather = JSON.parse(localStorage.getItem("currentWeather"));
     if (currentWeather !== null) {
         displayCurrentWeather(currentWeather);
+    }
+
+    // get previously searched uv index and run display function
+    let prevUVIndex = localStorage.getItem("uvIndex");
+    if (prevUVIndex !== null) {
+        displayUVIndex(prevUVIndex);
     }
 }
 
@@ -79,6 +87,10 @@ const makeCall = (queryURL) => {
     });
 }
 
+
+const displayUVIndex = (uvValue) => {
+    $(".uv-index").text(uvValue);
+}
 
 const displayCurrentWeather = (response) => {
     console.log(response);
@@ -203,7 +215,21 @@ function searchForecast(cityName) {
         console.log(response);
         displayCurrentWeather(response);
         localStorage.setItem("currentWeather", JSON.stringify(response));
-    }).catch(function(error) {
+
+        // get uv conditions using returned latitude and longitude
+        let lat = response.coord.lat;
+        let lon = response.coord.lon;
+        queryURL = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/uvi?appid=${API_KEY}&lat=${lat}&lon=${lon}`;
+        makeCall(queryURL).then(function(response) {
+            console.log("uv conditions");
+            console.log(response);
+            localStorage.setItem("uvIndex", response.value);
+            displayUVIndex(response.value);
+        }).catch(error => {
+            console.log("uv index error");
+            console.log(error);
+        })
+    }).catch(error => {
         console.log("Current weather error");
         console.log(error);
     });
