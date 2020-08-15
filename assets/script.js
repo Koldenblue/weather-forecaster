@@ -74,8 +74,7 @@ const makeCall = (queryURL) => {
 
 
 const displayWeather = (response) => {
-    console.log("getting icons...")
-    // first get icons
+    $(".currentCityTitle").text(response.city.name)
 
     // weatherTime corresponds to the index of the weather array, with increasing indices corresponding to future dates
     let weatherTime = 0;
@@ -114,7 +113,7 @@ const displayWeather = (response) => {
 
         cardBody.append(cardText1).append(cardText2).append(cardText3);
 
-        let weatherCard = $("<div class='card col-md-2' style='width:18rem;'>").append(cardDateText).append(newIcon).append(cardBody);
+        let weatherCard = $("<div class='card col-xl-2' style='width:18rem;'>").append(cardDateText).append(newIcon).append(cardBody);
         $(".weather-list").append(weatherCard)
 
         // increment weatherTime by 8 to get the next day's weather. Last day index will be 39, rather than 40.
@@ -176,6 +175,8 @@ function searchForecast(cityName) {
     }).catch(function(error) {
         console.log("ERROR ERROR ERROR " + error.statusText);
         console.log(error);
+        $(".loading-weather").attr("style", "visibility:hidden");
+        alert("That city could not be found! Did you spell it correctly?");
     });
 }
 
