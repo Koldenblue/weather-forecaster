@@ -65,7 +65,7 @@ const populatePrevSearches = () => {
     // then add a button for each city in the prevSearches array
     for (let i = 0, j = prevCities.length; i < j; i++) {
         let prevSearchBtn = $("<btn>");
-        prevSearchBtn.attr("class", "list-group-item list-group-item-action prev-search-btn").text(prevCities[i]);
+        prevSearchBtn.attr("class", "list-group-item list-group-item-action list-group-item-info prev-search-btn").text(prevCities[i]);
         prevSearchBtn.attr("id", "btn-" + i);
         prevSearchBtn.on("click", function() {
             let cityName = prevSearchBtn.text();
@@ -162,7 +162,7 @@ const displayForecastCards = (response) => {
 
         cardBody.append(cardText1).append(cardText2).append(cardText3);
 
-        let weatherCard = $("<div class='card col-xl-2' style='width:18rem;'>").append(cardDateText).append(newIcon).append(cardBody);
+        let weatherCard = $("<div class='card text-white bg-info col-xl-2' style='width:18rem;'>").append(cardDateText).append(newIcon).append(cardBody);
         $(".weather-list").append(weatherCard)
 
         // increment weatherTime by 8 to get the next day's weather. Last day index will be 39, rather than 40.

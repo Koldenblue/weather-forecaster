@@ -42,7 +42,7 @@
             <label for="city-name" class='sr-only'>City Name</label>
             <input type="text" class="form-control" id="city-name" aria-describedby="city-name">
           </div>
-          <button type="submit" class="btn btn-primary mb-2" id="get-weather">Submit</button>
+          <button type="submit" class="btn btn-success mb-2" id="get-weather">Submit</button>
           <small id="enter-city" class="form-text text-muted mx-sm-3 mb-2">Enter the name of the city here.</small>
           <div class="spinner-border loading-weather" role="status">
             <span class="sr-only">Loading...</span>
@@ -70,14 +70,14 @@
 
         <!-- Current time section -->
         <section class='col-md-4'>
-          <div class="card time-card">
+          <div class="card time-card text-white bg-secondary">
             <div class="card-header">
               <strong class="currentDay"></strong>
             </div>
             <div class="card-body">
                 </p>Today's UV Index: <span id='uv-index' class="uv-index badge badge-danger">Search for a city first!</span></p>
                 <p class='suntan'></p>
-                <p>also time</p>
+                <p class='clock'></p>
             </div>
           </div>
         </section>

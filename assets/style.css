@@ -1,5 +1,5 @@
 body {
-    background-color: darkgreen;
+    background-color: rgb(3, 71, 3);
     margin: 0;
 }
 
@@ -8,7 +8,7 @@ body {
 }
 
 header {
-    background-color: crimson;
+    background-color: rgb(161, 20, 48);
 }
 
 .container-fluid {
@@ -42,6 +42,7 @@ h1, .current-conditions {
 .jumbotron {
     padding-top: 2rem;
     padding-bottom: 2rem;
+    background-color: rgb(197, 197, 197);
 }
 
 .current-weather-icon {
