@@ -36,7 +36,14 @@ const getLocalStorage = () => {
 
     let lastForecast = JSON.parse(localStorage.getItem("lastForecast"));
     if (lastForecast !== null) {
-        displayWeather(lastForecast);
+        displayForecastCards(lastForecast);
+    }
+    else {
+        $(".currentCityTitle").text("Search for a city to start!");
+    }
+    let currentWeather = JSON.parse(localStorage.getItem("currentWeather"));
+    if (currentWeather !== null) {
+        displayCurrentWeather(currentWeather);
     }
 }
 
@@ -73,11 +80,23 @@ const makeCall = (queryURL) => {
 }
 
 
-const displayWeather = (response) => {
+const displayCurrentWeather = (response) => {
+    console.log(response);
+    const weatherTemp = response.main.temp;
+    const humidity = response.main.humidity;
+    const windSpeed = response.wind.speed;
+
+    $(".current-temp").text(`Temperature: ${weatherTemp} °F`);
+    $(".current-humidity").text(`Humidity: ${humidity}%`);
+    $(".current-windspeed").text(`Wind speed: ${windSpeed} mph`);
+}
+
+const displayForecastCards = (response) => {
     $(".currentCityTitle").text(response.city.name)
 
     // weatherTime corresponds to the index of the weather array, with increasing indices corresponding to future dates
     let weatherTime = 0;
+
     // clear out old weather cards, then make a new set of five cards.
     $(".weather-list").empty();
 
@@ -142,7 +161,7 @@ const weatherListener = () => {
 
 
 /** Makes API call. After response is returned, add the searched city to the search list. 
- * Call displayWeather() to display results. */
+ * Call displayForecastCards() to display results. */
 function searchForecast(cityName) {
     // Search forecast using input city. Imperial units for Fahrenheit
     let queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="
@@ -171,12 +190,22 @@ function searchForecast(cityName) {
         localStorage.setItem("lastForecast", JSON.stringify(response));
         console.log(response);
         populatePrevSearches();
-        displayWeather(response);
+        displayForecastCards(response);
     }).catch(function(error) {
         console.log("ERROR ERROR ERROR " + error.statusText);
         console.log(error);
         $(".loading-weather").attr("style", "visibility:hidden");
-        alert("That city could not be found! Did you spell it correctly?");
+        alert("That city's forecast could not be found!");
+    });
+
+    queryURL = `https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${API_KEY}`
+    makeCall(queryURL).then(response => {
+        console.log(response);
+        displayCurrentWeather(response);
+        localStorage.setItem("currentWeather", JSON.stringify(response));
+    }).catch(function(error) {
+        console.log("Current weather error");
+        console.log(error);
     });
 }
 

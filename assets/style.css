@@ -27,10 +27,19 @@ header {
     /* margin-right: 1em; */
 }
 
-h1 {
+h1, .current-conditions {
     font-family: 'Merriweather', serif;
 }
 
 .card {
     margin: 0.5em;
+}
+
+.current-conditions {
+    font-size: large;
+}
+
+.jumbotron {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
