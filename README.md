@@ -3,7 +3,7 @@ A simple app that forecasts the weather for the next five days.
 
 The deployed app can be found at https://koldenblue.github.io/weather-forecaster/. Simply type a city name into the search bar, and the current weather conditions will be displayed on the main display. Forecasts for the next 5 days are clearly marked. Click on the previous searches to search that city again.
 
-![image](https://user-images.githubusercontent.com/64618290/90305759-99724280-de7a-11ea-9a05-597b796cfc12.png)
+![image](https://user-images.githubusercontent.com/64618290/90313767-fd6d2900-dec3-11ea-9a85-b41ab88cff7b.png)
 
 ## Code Discussion
 
