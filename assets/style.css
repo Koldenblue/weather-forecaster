@@ -43,3 +43,13 @@ h1, .current-conditions {
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
+
+.current-weather-icon {
+    display: inline;
+    position: relative;
+    top: -1rem;
+}
+
+.currentCityTitle {
+    display: inline;
+}

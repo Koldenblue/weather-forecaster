@@ -90,6 +90,20 @@ const makeCall = (queryURL) => {
 
 const displayUVIndex = (uvValue) => {
     $(".uv-index").text(uvValue);
+    // change color of uv-index badge depending on conditions
+    if (uvValue >= 3 && uvValue < 5) {
+        $("#uv-index").attr("class", "uv-index badge badge-warning");
+        $(".suntan").text("Always protect your skin from the sun!");
+    }
+    else if (uvValue >= 5) {
+        $("#uv-index").attr("class", "uv-index badge badge-danger");
+        $(".suntan").text("Remember to wear suntan lotion!");
+
+    }
+    else {
+        $("#uv-index").attr("class", "uv-index badge badge-success");
+        $(".suntan").text("Enjoy the outdoors!");
+    }
 }
 
 const displayCurrentWeather = (response) => {
@@ -97,10 +111,14 @@ const displayCurrentWeather = (response) => {
     const weatherTemp = response.main.temp;
     const humidity = response.main.humidity;
     const windSpeed = response.wind.speed;
+    const iconCode = response.weather[0].icon;
+    let iconURL = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
 
     $(".current-temp").text(`Temperature: ${weatherTemp} °F`);
     $(".current-humidity").text(`Humidity: ${humidity}%`);
     $(".current-windspeed").text(`Wind speed: ${windSpeed} mph`);
+
+    $(".current-weather-icon").attr("src", iconURL);
 }
 
 const displayForecastCards = (response) => {
