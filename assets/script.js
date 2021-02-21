@@ -194,7 +194,7 @@ const weatherListener = () => {
  * Call displayForecastCards() to display results. */
 function searchForecast(cityName) {
     // Search forecast using input city. Imperial units for Fahrenheit
-    let queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="
+    let queryURL = "http://api.openweathermap.org/data/2.5/forecast?q="
         + cityName + "&units=imperial&appid=" + API_KEY;
 
     // display loading spinner while making api call
@@ -228,7 +228,7 @@ function searchForecast(cityName) {
         alert("That city's forecast could not be found!");
     });
 
-    queryURL = `https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${API_KEY}`
+    queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${API_KEY}`
     makeCall(queryURL).then(response => {
         console.log(response);
         displayCurrentWeather(response);
@@ -237,7 +237,7 @@ function searchForecast(cityName) {
         // get uv conditions using returned latitude and longitude
         let lat = response.coord.lat;
         let lon = response.coord.lon;
-        queryURL = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/uvi?appid=${API_KEY}&lat=${lat}&lon=${lon}`;
+        queryURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${API_KEY}&lat=${lat}&lon=${lon}`;
         makeCall(queryURL).then(function(response) {
             console.log("uv conditions");
             console.log(response);
